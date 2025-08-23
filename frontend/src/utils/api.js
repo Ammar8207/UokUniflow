@@ -1,4 +1,4 @@
-export const API_BASE = "http://localhost:3001/api";
+export const API_BASE = "https://uokuniflow-production.up.railway.app";
 
 export const apiRequest = async (endpoint, method = "GET", body = null, token = null) => {
   const headers = {
