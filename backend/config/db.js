@@ -1,24 +1,23 @@
-// backend/db.js
-const mysql = require("mysql2");
+const { Pool } = require("pg");
 const dotenv = require("dotenv");
 
-// ✅ Load environment variables
 dotenv.config();
 
-// ✅ Create MySQL connection
-const db = mysql.createConnection({
-  host: process.env.DB_HOST,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_NAME,
+const db = new Pool({
+  host: process.env.PGHOST,
+  user: process.env.PGUSER,
+  password: process.env.PGPASSWORD,
+  database: process.env.PGDATABASE,
+  port: process.env.PGPORT,
+  ssl: { rejectUnauthorized: false }
 });
 
-// ✅ Connect to DB
-db.connect((err) => {
+db.connect((err, client, release) => {
   if (err) {
     console.error("❌ DB connection failed:", err.message);
   } else {
-    console.log("✅ MySQL Connected!");
+    console.log("✅ PostgreSQL Connected!");
+    release();
   }
 });
 
